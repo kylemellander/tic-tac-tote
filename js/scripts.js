@@ -281,7 +281,7 @@ $(document).ready(function(){
       turn += 1;
       if (win === true) {
         $('td.blank-space').unbind("click")
-        $('div.game-over').show();
+        $('div.game-over').fadeIn();
         $('h1.game-over-message').text(currentPlayer.name + " has defeated " +
                                     otherPlayer.name);
       } else if (turn === 10) {
@@ -301,12 +301,12 @@ $(document).ready(function(){
           turn += 1;
           if (win === true) {
             $('td.blank-space').unbind("click")
-            $('div.game-over').show();
             $('h1.game-over-message').text(playerTwo.name + " has defeated " +
             playerOne.name);
+            $('div.game-over').fadeIn();
           } else if (turn === 10) {
-            $('div.game-over').show();
             $('h1.game-over-message').text("CatScratch #!%*");
+            $('div.game-over').fadeIn();
           }
         }
       }
