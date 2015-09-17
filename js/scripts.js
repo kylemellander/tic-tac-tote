@@ -95,7 +95,7 @@ Game.prototype.computerPick = function(difficulty, player, otherPlayer) {
     }
   }
 
-  if (difficulty === "hard") {
+  if (difficulty === "hard" || difficulty === "impossible") {
     var block = false;
 
     for(var i = 0; i < this.board.spaces.length; ++i) {
@@ -132,9 +132,42 @@ Game.prototype.computerPick = function(difficulty, player, otherPlayer) {
         this.board.spaces[4].mark = "o";
         var space = this.board.spaces[4];
       // If "x" picked Center
-      } else if (this.board.spaces[4].mark === "x") {
+      } else if (this.board.spaces[4].mark === "x" && this.board.spaces[0].mark ==="") {
         this.board.spaces[0].mark = "o";
         var space = this.board.spaces[0];
+      } else if (this.board.spaces[0].mark === "o" && this.board.spaces[8].mark === "x" && this.board.spaces[4].mark === "x" && this.board.spaces[6].mark === "") {
+        this.board.spaces[6].mark = "o";
+        var space = this.board.spaces[6];
+      } else if (difficulty === "impossible" && this.board.spaces[0].mark === "x" && this.board.spaces[8].mark === "x" && this.board.spaces[1].mark === "") {
+        this.board.spaces[1].mark = "o";
+        var space = this.board.spaces[1];
+      } else if (difficulty === "impossible" && this.board.spaces[2].mark === "x" && this.board.spaces[6].mark === "x" && this.board.spaces[1].mark === "") {
+        this.board.spaces[1].mark = "o";
+        var space = this.board.spaces[1];
+      } else if (difficulty === "impossible" && this.board.spaces[0].mark === "x" && this.board.spaces[5].mark === "x" && this.board.spaces[2].mark === "") {
+        this.board.spaces[2].mark = "o";
+        var space = this.board.spaces[2];
+      } else if (difficulty === "impossible" && this.board.spaces[0].mark === "x" && this.board.spaces[7].mark === "x" && this.board.spaces[6].mark === "") {
+        this.board.spaces[6].mark = "o";
+        var space = this.board.spaces[6];
+      } else if (difficulty === "impossible" && this.board.spaces[2].mark === "x" && this.board.spaces[3].mark === "x" && this.board.spaces[0].mark === "") {
+        this.board.spaces[0].mark = "o";
+        var space = this.board.spaces[0];
+      } else if (difficulty === "impossible" && this.board.spaces[2].mark === "x" && this.board.spaces[7].mark === "x" && this.board.spaces[8].mark === "") {
+        this.board.spaces[8].mark = "o";
+        var space = this.board.spaces[8];
+      } else if (difficulty === "impossible" && this.board.spaces[6].mark === "x" && this.board.spaces[1].mark === "x" && this.board.spaces[0].mark === "") {
+        this.board.spaces[0].mark = "o";
+        var space = this.board.spaces[0];
+      } else if (difficulty === "impossible" && this.board.spaces[6].mark === "x" && this.board.spaces[5].mark === "x" && this.board.spaces[8].mark === "") {
+        this.board.spaces[8].mark = "o";
+        var space = this.board.spaces[8];
+      } else if (difficulty === "impossible" && this.board.spaces[8].mark === "x" && this.board.spaces[3].mark === "x" && this.board.spaces[6].mark === "") {
+        this.board.spaces[6].mark = "o";
+        var space = this.board.spaces[6];
+      } else if (difficulty === "impossible" && this.board.spaces[8].mark === "x" && this.board.spaces[1].mark === "x" && this.board.spaces[2].mark === "") {
+        this.board.spaces[2].mark = "o";
+        var space = this.board.spaces[2];
       } else {
         var condition = false;
         while (condition === false) {

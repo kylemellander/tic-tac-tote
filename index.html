@@ -36,10 +36,7 @@
         <div class="form-group humanPlayer">
           <label for="humanPlayer-name">Your Name</label>
           <input type="text" id="humanPlayer-name" name="humanPlayer-name" placeholder="Enter your name...">
-          <select id="humanPlayer-mark">
-            <option value="x">X</option>
-            <option value="o">O</option>
-          </select>
+          <input id="humanPlayer-mark" type="hidden" value="x">
         </div>
 
         <div class="form-group computerPlayer">
@@ -47,6 +44,7 @@
           <select id="difficulty">
             <option value="easy">Easy</option>
             <option value="hard">Hard</option>
+            <option value="impossible" selected>Impossible</option>
           </select>
         </div>
         <button type="submit">Start</button>
@@ -58,7 +56,7 @@
         <h1 class="game-over-message"></h1>
         <button class="btn btn-default" onclick="playAgain()">Play Again</button>
       </div>
-      
+
       <h2 id="turn-counter">Current Player: <span class="current-player"></span></h2>
 
       <div id="game-board">
