@@ -18,9 +18,9 @@ var Board = function(){
 
 Board.prototype.fill = function() {
   if (this.spaces.length === 0) {
-    for (var i = 0; i < 3; i += 1) {
-      for (var j = 0; j < 3; j += 1) {
-        this.spaces.push(new Space(i, j, ""));
+    for (var x = 0; x < 3; x += 1) {
+      for (var y = 0; y < 3; y += 1) {
+        this.spaces.push(new Space(x, y, ""));
       }
     }
   }
@@ -30,6 +30,7 @@ Board.prototype.fill = function() {
 var Player = function(name,mark) {
   this.name = name;
   this.mark = mark;
+  this.difficulty = "human";
 }
 
 var Game = function(playerOne, playerTwo, board) {
@@ -86,6 +87,20 @@ function playAgain() {
   location.reload();
 }
 
+Game.prototype.computerPick = function(difficulty, player) {
+  if (difficulty === "easy") {
+    var condition = false;
+    while (condition === false) {
+      var index = Math.floor(Math.random() * 9);
+      if (this.board.spaces[index].mark === "") {
+        this.board.spaces[index].createMark(player);
+        condition = true;
+        var space = this.board.spaces[index];
+      }
+    }
+    return space;
+  }
+}
 
 
 $(document).ready(function(){
@@ -122,20 +137,50 @@ $(document).ready(function(){
     $('span.current-player').text(playerOne.name);
   });
 
+  $("#computer-form").submit(function(event) {
+    event.preventDefault();
+
+    playerOneMark = $("#humanPlayer-mark").val();
+    if (playerOneMark === "x") {
+      playerTwoMark = "o";
+    } else {
+      playerTwoMark = "x";
+    }
+
+    playerOne = new Player ($('#humanPlayer-name').val(), playerOneMark);
+    playerTwo = new Player ("Computer", playerTwoMark);
+    playerTwo.difficulty = $("#difficulty").val();
+
+    board = new Board();
+    board.fill();
+
+    game = new Game(playerOne, playerTwo, board);
+
+    $('#playerOne-displayMark').text(playerOne.mark);
+    $('#playerTwo-displayMark').text(playerTwo.mark);
+
+    $('#new-players').hide();
+    $('.game-space').show();
+    $('span.current-player').text(playerOne.name);
+  });
+
   $('td.blank-space').each(function() {
     $(this).click(function() {
       var currentPlayer = playerOne;
       var otherPlayer = playerTwo;
-      if (turn % 2 === 0) {
-        otherPlayer = playerOne;
-        currentPlayer = playerTwo;
+      if (otherPlayer.difficulty === "human") {
+        if (turn % 2 === 0) {
+          otherPlayer = playerOne;
+          currentPlayer = playerTwo;
+        }
+        $('span.current-player').text(otherPlayer.name);
       }
-      $('span.current-player').text(otherPlayer.name);
 
       var index = parseInt($(this).attr('id'));
-      currentSpace = board.spaces[index];
+      currentSpace = game.board.spaces[index];
       currentSpace.createMark(currentPlayer);
-      $(this).text(board.spaces[index].mark);
+      $(this).text(game.board.spaces[index].mark);
+      $(this).unbind("click");
 
       win = game.lineWin(currentSpace, 'x') ||
             game.lineWin(currentSpace, 'y') ||
@@ -150,9 +195,29 @@ $(document).ready(function(){
       } else if (turn === 10) {
         $('div.game-over').show();
         $('h1.game-over-message').text("CatScratch #!%*");
+      } else {
+
+        if (otherPlayer.difficulty !== "human") {
+          currentSpace = game.computerPick(otherPlayer.difficulty, otherPlayer);
+          $("." + currentSpace.x + currentSpace.y).text(playerTwo.mark);
+          $("." + currentSpace.x + currentSpace.y).unbind("click");
+
+          win = game.lineWin(currentSpace, 'x') ||
+          game.lineWin(currentSpace, 'y') ||
+          game.diagWin(currentSpace);
+
+          turn += 1;
+          if (win === true) {
+            $('div.game-space').hide();
+            $('div.game-over').show();
+            $('h1.game-over-message').text(otherPlayer.name + " has defeated " +
+            currentPlayer.name);
+          } else if (turn === 10) {
+            $('div.game-over').show();
+            $('h1.game-over-message').text("CatScratch #!%*");
+          }
+        }
       }
-      $(this).unbind("click");
     });
   });
-
 });

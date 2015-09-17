@@ -12,6 +12,7 @@
       <h1 id="title">Tic Tac Totes</h1>
     </div>
     <div id="new-players">
+      <h2>Play a friend</h2>
       <form role="form" id="player-form">
         <div class="form-group playerOne">
           <label for="playerOne-name">Player One</label>
@@ -26,6 +27,26 @@
           <input type="text" id="playerTwo-name" name="playerTwo-name" placeholder="Enter a name...">
           <select id="playerTwo-mark">
             <option value="o">O</option>
+          </select>
+        </div>
+        <button type="submit">Start</button>
+      </form>
+      <h2>Play the computer</h2>
+      <form id="computer-form">
+        <div class="form-group humanPlayer">
+          <label for="humanPlayer-name">Your Name</label>
+          <input type="text" id="humanPlayer-name" name="humanPlayer-name" placeholder="Enter your name...">
+          <select id="humanPlayer-mark">
+            <option value="x">X</option>
+            <option value="o">O</option>
+          </select>
+        </div>
+
+        <div class="form-group computerPlayer">
+          <label for="difficulty">Select Difficulty</label>
+          <select id="difficulty">
+            <option value="easy">Easy</option>
+            <option value="hard">Hard</option>
           </select>
         </div>
         <button type="submit">Start</button>
@@ -48,19 +69,19 @@
 
         <table>
           <tr>
-            <td class="blank-space" id="2" class="02"></td>
-            <td class="blank-space" id="5" class="12"></td>
-            <td class="blank-space" id="8" class="22"></td>
+            <td class="blank-space 00" id="0"></td>
+            <td class="blank-space 01" id="1"></td>
+            <td class="blank-space 02" id="2"></td>
           </tr>
           <tr>
-            <td class="blank-space" id="1" class="01"></td>
-            <td class="blank-space" id="4" class="11"></td>
-            <td class="blank-space" id="7" class="21"></td>
+            <td class="blank-space 10" id="3"></td>
+            <td class="blank-space 11" id="4"></td>
+            <td class="blank-space 12" id="5"></td>
           </tr>
           <tr>
-            <td class="blank-space" id="0" class="00"></td>
-            <td class="blank-space" id="3" class="10"></td>
-            <td class="blank-space" id="6" class="20"></td>
+            <td class="blank-space 20" id="6"></td>
+            <td class="blank-space 21" id="7"></td>
+            <td class="blank-space 22" id="8"></td>
           </tr>
         </table>
       </div>
