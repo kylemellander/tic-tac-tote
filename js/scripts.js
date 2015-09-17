@@ -60,27 +60,30 @@ Game.prototype.lineWin = function(currentSpace, axis) {
     }
 
   });
-    return win;
+  return win;
 }
 
 Game.prototype.diagWin = function(currentSpace) {
   var allSpaces = this.board.spaces;
   var win = true;
-  var filteredSpaces = allSpaces.filter(function(space) {
-    return Math.abs(space.x - currentSpace.x) === Math.abs(space.y - currentSpace.y)
-  });
+  if ((currentSpace.x + currentSpace.y) % 2 !== 0) {
+    win = false;
+  } else {
+    var filteredSpaces = allSpaces.filter(function(space) {
+      return Math.abs(space.x - currentSpace.x) === Math.abs(space.y - currentSpace.y)
+    });
 
-  filteredSpaces.forEach(function(filteredSpace) {
-    if (filteredSpace.mark !== currentSpace.mark) {
-      win = false;
-    }
-  });
-
-    return win;
+    filteredSpaces.forEach(function(filteredSpace) {
+      if (filteredSpace.mark !== currentSpace.mark) {
+        win = false;
+      }
+    });
+  }
+  return win;
 }
 
 function playAgain() {
-    location.reload();
+  location.reload();
 }
 
 
@@ -137,15 +140,14 @@ $(document).ready(function(){
       win = game.lineWin(currentSpace, 'x') ||
             game.lineWin(currentSpace, 'y') ||
             game.diagWin(currentSpace);
-            
+
+      turn += 1;
       if (win === true) {
         $('div.game-space').hide();
         $('div.game-over').show();
         $('h1.game-over-message').text(currentPlayer.name + " has defeated " +
                                     otherPlayer.name);
-      }
-      turn += 1;
-      if (turn === 10) {
+      } else if (turn === 10) {
         $('div.game-over').show();
         $('h1.game-over-message').text("CatScratch #!%*");
       }
